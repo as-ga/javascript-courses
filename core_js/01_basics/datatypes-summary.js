@@ -18,7 +18,7 @@ const bigNumber = 3456543576654356754n; // BigInt
 // Array, Objects, Functions
 const heros = ["shaktiman", "naagraj", "doga"];
 
-let myObj = { name: "hitesh", age: 22 };
+let myObj = { name: "Gaurav", age: 22 };
 
 const myFunction = function () {
   console.log("Hello world");
