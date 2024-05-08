@@ -6,16 +6,19 @@ function App() {
   // let counter = 10;
   function addValue() {
     if (counter < 20) {
-      counter += 1;
-      setCounter(counter);
-      console.log("clicked", counter);
+      setCounter((prevCounter) => prevCounter + 1);
+      setCounter((prevCounter) => prevCounter + 1);
+      setCounter((prevCounter) => prevCounter + 1);
+      setCounter((prevCounter) => prevCounter + 1);
     }
   }
   function removeValue() {
     // counter -= 1;
     if (counter > 0) {
-      setCounter(counter - 1);
-      console.log("clicked", counter);
+      setCounter((prevCounter) => prevCounter - 1);
+      setCounter((prevCounter) => prevCounter - 1);
+      setCounter((prevCounter) => prevCounter - 1);
+      setCounter((prevCounter) => prevCounter - 1);
     }
   }
 
