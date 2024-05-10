@@ -1,7 +1,7 @@
-import conf from "../conf/conf";
-import { Client, Account, ID, Query } from "appwrite";
+import conf from "../conf/conf.js";
+import { Client, ID, Databases, Storage, Query } from "appwrite";
 
-export class service {
+export class Service {
   client = new Client();
   databases;
   bucket;
@@ -10,14 +10,14 @@ export class service {
     this.client
       .setEndpoint(conf.appwriteUrl)
       .setProject(conf.appwriteProjectId);
-    this.databases = new Database(this.client);
+    this.databases = new Databases(this.client);
     this.bucket = new Storage(this.client);
   }
 
   async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
       return await this.databases.createDocument(
-        conf.appwriteCollectionId,
+        conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         slug,
         { title, content, featuredImage, status, userId }
@@ -27,11 +27,10 @@ export class service {
       throw error;
     }
   }
-
   async updatePost(slug, { title, content, featuredImage, status }) {
     try {
       return await this.databases.updateDocument(
-        conf.appwriteCollectionId,
+        conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         slug,
         { title, content, featuredImage, status }
@@ -44,7 +43,7 @@ export class service {
   async deletePost(slug) {
     try {
       await this.databases.deleteDocument(
-        conf.appwriteCollectionId,
+        conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         slug
       );
@@ -58,7 +57,7 @@ export class service {
   async getPost(slug) {
     try {
       return await this.databases.getDocument(
-        conf.appwriteCollectionId,
+        conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         slug
       );
@@ -70,7 +69,7 @@ export class service {
   async getPosts(queries = [Query.equal("status", "active")]) {
     try {
       return await this.databases.listDocuments(
-        conf.appwriteCollectionId,
+        conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         queries
       );
@@ -82,7 +81,7 @@ export class service {
   async uploadFile(file) {
     try {
       return await this.bucket.createFile(
-        conf.appwriteStorageId,
+        conf.appwriteBucketId,
         ID.unique(),
         file
       );
@@ -101,6 +100,9 @@ export class service {
     }
   }
   getFilePreview(fileId) {
-    return this.bucket.getFilePreview(conf.appwriteStorageId, fileId);
+    return this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
   }
 }
+
+const service = new Service();
+export default service;
