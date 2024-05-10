@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Header() {
+  const userData = useSelector((state) => state.auth.userData);
   const authStatus = useSelector((state) => state.auth.status);
   const navigate = useNavigate();
   const navItems = [
@@ -17,11 +18,16 @@ function Header() {
     <header className="py-3 shadow bg-gray-500">
       <Container>
         <nav className="flex">
-          <div className="mr-4">
+          <div className="mr-4 inline-bock px-6 py-2 duration-200">
             <Link to="/">
               <Logo width="70px" />
             </Link>
           </div>
+          {authStatus && (
+            <div className="w-1/2 text-center font-xl font-bold m-auto text-red-600">
+              {userData.name}
+            </div>
+          )}
           <ul className="flex ml-auto">
             {navItems.map((item) =>
               item.active ? (
